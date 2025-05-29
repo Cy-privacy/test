@@ -50,16 +50,12 @@ namespace LunarAimbot
         {
             InitializeComponent();
             
-            // Get screen metrics
             screenWidth = GetSystemMetrics(SM_CXSCREEN);
             screenHeight = GetSystemMetrics(SM_CYSCREEN);
             screenCenterX = screenWidth / 2;
             screenCenterY = screenHeight / 2;
 
-            // Load YOLO model
             model = new YoloModel("models/best.onnx");
-
-            // Set up keyboard hooks
             KeyboardHook.KeyPressed += OnKeyPressed;
             
             SetupUI();
@@ -68,10 +64,10 @@ namespace LunarAimbot
 
         private void SetupUI()
         {
-            this.Text = "Lunar Aimbot";
-            this.Size = new Size(400, 300);
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            Text = "Lunar Aimbot";
+            Size = new Size(400, 300);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
 
             Label statusLabel = new Label
             {
@@ -86,8 +82,9 @@ namespace LunarAimbot
 
         private void LoadConfig()
         {
-            // Load sensitivity settings from config file
-            // This would mirror the Python version's config.json functionality
+            var config = Config.Load();
+            xyScale = config.XYScale;
+            targetingScale = config.TargetingScale;
         }
 
         private void OnKeyPressed(object sender, KeyPressedEventArgs e)
